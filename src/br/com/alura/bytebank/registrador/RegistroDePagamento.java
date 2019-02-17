@@ -8,40 +8,41 @@ import java.util.List;
 
 public class RegistroDePagamento {
 
-    private final static List<Pagamento> PAGAMENTOS = new ArrayList<>();
+    private final List<Pagamento> PAGAMENTOS = new ArrayList<>();
 
     public void registra(List<Pagamento> pagamentos) {
-        for (int i = 0; i < pagamentos.size(); i++) {
-            Pagamento p = pagamentos.get(i);
-            verificaTipo(p);
-        }
-        exibeEfetuados();
-    }
-
-    private void exibeEfetuados() {
-        if (!PAGAMENTOS.isEmpty()) {
-            System.out.println("Todos os pagamentos");
-            for (int i = 0; i < PAGAMENTOS.size(); i++) {
-                System.out.println(PAGAMENTOS.get(i));
-            }
-        } else {
-            System.out.println("Não temos pagamentos");
+        for (Pagamento pagamento : pagamentos) {
+            verificaTipo(pagamento);
+            salva(pagamento);
         }
     }
 
     private void verificaTipo(Pagamento pagamento) {
         if (pagamento.getTipo().equals(Tipo.CREDITO)) {
-            pagamento.setValor(pagamento.getValor() * 1.02);
+            double valorComAcrescimo = pagamento.getValor() * 1.02;
+            pagamento.setValor(valorComAcrescimo);
         }
+
         if (pagamento.getTipo().equals(Tipo.DEBITO)) {
-            pagamento.setValor(pagamento.getValor() * 1.001);
+            double valorComAcrescimo = pagamento.getValor() * 1.001;
+            pagamento.setValor(valorComAcrescimo);
         }
-        salva(pagamento);
     }
 
     private void salva(Pagamento pagamento) {
         PAGAMENTOS.add(pagamento);
         System.out.println("Pagamento realizado " + pagamento);
+    }
+
+    public void exibeEfetuados() {
+        if (PAGAMENTOS.isEmpty()) {
+            System.out.println("Não tem pagamentos registrados");
+        } else {
+            System.out.println("Todos os pagamentos");
+            for (Pagamento pagamentosRegistrado : PAGAMENTOS) {
+                System.out.println(pagamentosRegistrado);
+            }
+        }
     }
 
 }
