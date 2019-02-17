@@ -1,21 +1,23 @@
 package br.com.alura.bytebank;
 
-import br.com.alura.bytebank.model.Funcionario;
+import br.com.alura.bytebank.model.Pagamento;
+import br.com.alura.bytebank.model.Tipo;
+import br.com.alura.bytebank.registrador.RegistroDePagamento;
+import br.com.alura.bytebank.registrador.RegistroDePagamentoAlpha;
 
-import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 public class Principal {
-
     public static void main(String[] args) {
+        Pagamento almoco = new Pagamento(Tipo.DEBITO, 20, "Almoço no feijuca");
+        Pagamento videogame = new Pagamento(Tipo.CREDITO, 1000, "PS4");
 
-        System.out.println("Bem vindo ao Bytebank");
+        List<Pagamento> pagamentos = Arrays.asList(almoco, videogame);
 
-        Funcionario jose = new Funcionario("José", 1, LocalDate.of(1990, 2, 10));
-        Funcionario maria = new Funcionario("Maria", 2, LocalDate.of(1991, 5, 15));
-
-        System.out.println(jose);
-        System.out.println(maria);
-
+        RegistroDePagamento registrador = new RegistroDePagamento();
+                ;
+        registrador.registra(pagamentos);
     }
 
 }
